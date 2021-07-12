@@ -7,10 +7,19 @@ Hooks.once('init', async function() {
         type: String,
         choices: {
           author: "Modules are grouped by Author",
-          prefix: "Modules are grouped by 4 character prefixes",
+          prefix: "Modules are grouped by character prefixes",
         },
         default: "author",
       });
+
+    game.settings.register("module-collapse", "minimumSize", {
+        name: "Minimum Size for Prefix / Author Count",
+        hint: "Minimum Size for the Prefix and/or the minimum # of modules to be combined.",
+        scope: "world",
+        config: true,
+        type: Number,
+        default: 4
+    });
 });
 
 Hooks.once('ready', async function() {
@@ -21,6 +30,7 @@ Hooks.on('renderModuleManagement', async (app, html, options) => {
     const packages = [...game.modules.keys()];
 
     const GMETHOD = game.settings.get("module-collapse", "groupMethod");
+    const MSIZE = game.settings.get("module-collapse", "minimumSize");
 
     let groups = {};
     if (GMETHOD === "author") {
@@ -36,7 +46,7 @@ Hooks.on('renderModuleManagement', async (app, html, options) => {
         });
 
         Object.keys(authors).forEach((author) => {
-            if (!(authors[author].size >= 4)) {
+            if (!(authors[author].size >= MSIZE)) {
                 delete authors[author];
             }
         })
@@ -49,11 +59,11 @@ Hooks.on('renderModuleManagement', async (app, html, options) => {
         while (i < packages.length) {
             if (packages[i+1] !== undefined) {
                 let prefix = findLongestPrefix([packages[i], packages[i+1]]);
-                const truncPrefix = prefix.substring(0,4);
+                const truncPrefix = prefix.substring(0,MSIZE);
                 if (truncPrefix in prefixes) {
                     prefix = truncPrefix;
                 }
-                if (prefix.length >= 4) {
+                if (prefix.length >= MSIZE) {
                     if (!(prefix in prefixes)){
                         prefixes[prefix] = new Set();
                     }
