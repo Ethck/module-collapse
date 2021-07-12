@@ -1,12 +1,13 @@
 {
   "name": "module-collapse",
   "title": "Module Collapse",
-  "description": "",
+  "description": "This module allows for similar modules to be in collapsible lists to reduce scrolling.",
   "version": "This is auto replaced",
   "library": "false",
   "manifestPlusVersion": "1.0.0",
   "minimumCoreVersion": "0.8.8",
   "compatibleCoreVersion": "0.8.8",
+  "author": "Ethck",
   "authors": [
     {
       "name": "Ethck",
