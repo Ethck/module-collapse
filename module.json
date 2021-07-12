@@ -1,6 +1,6 @@
 {
-  "name": "module",
-  "title": "New Module",
+  "name": "module-collapse",
+  "title": "Module Collapse",
   "description": "",
   "version": "This is auto replaced",
   "library": "false",
@@ -9,22 +9,13 @@
   "compatibleCoreVersion": "0.8.8",
   "authors": [
     {
-      "name": "The League of Extraordinary FVTT Developers",
-      "url": "https://github.com/League-of-Foundry-Developers",
-      "discord": "discordID#0001"
+      "name": "Ethck",
+      "url": "https://github.com/Ethck",
+      "discord": "Ethck#6879"
     }
-  ],
-  "dependencies": [
-
-  ],
-  "conflicts": [
-    
   ],
   "esmodules": [
     "/scripts/module.js"
-  ],
-  "scripts": [
-    "/scripts/lib/lib.js"
   ],
   "styles": [
     "/styles/module.css"

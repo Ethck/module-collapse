@@ -1,0 +1,28 @@
+.module-collapse-content {
+    display: none;
+    overflow: hidden;
+}
+
+.module-collapse-collapsible {
+    cursor: pointer;
+    height: 20px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 0 3px;
+    margin: 0 0 0 2px;
+    font-size: 11px;
+    line-height: 18px;
+    text-decoration: none;
+    background: #333;
+    color: #f0f0e0;
+}
+
+.module-collapse-title {
+    color: #191813;
+    text-decoration: underline;
+    font-size: 14px;
+    margin: 0;
+    height: 22px;
+    line-height:22px;
+    padding: 0;
+}
