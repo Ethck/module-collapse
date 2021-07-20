@@ -36,8 +36,6 @@ Hooks.on('renderModuleManagement', async (app, html, options) => {
     if (GMETHOD === "author") {
         let authors = {};
         game.modules.forEach((pack) => {
-            console.log(pack);
-            console.log(pack.data.author);
             let author = pack.data.author;
             if (!(author in authors)) {
                 authors[author] = new Set();
@@ -94,15 +92,26 @@ Hooks.on('renderModuleManagement', async (app, html, options) => {
             title = toTitleCase(findLongestPrefix(items.map((item) => $(item).find(".package-title").text().trim().toLowerCase())));
         }
 
-        html.find("#module-list").append('<li id="' + title.replaceAll(" ", "-") + '"><ul class="module-collapse-content"></ul></li>');
-        const moduleSubList = html.find('#module-list #' + title.replaceAll(" ", "-") + ' ul');
-        html.find('#module-list #' + title.replaceAll(" ", "-")).prepend("<div class='flexrow'><input type='checkbox' class='module-collapse-checkbox' name='" + title.replaceAll(" ", "-") + "' data-dtype='Boolean'><label class='module-collapse-title package-title'>" + title + "</label><button type='button' class='module-collapse-collapsible open'>Show</button><button type='button' class='module-collapse-collapsible close'>Hide</button></div>");
+        // modify the title into something usable for an id
+        // id is used as a css selector so can't special characters (non a-z)
+        let titleID = title.replaceAll(" ", "-")
+            .replaceAll(/[^\w+]/g, "");
+
+        if (titleID === "") {
+            titleID = "Unknown Author";
+        }
+
+        html.find("#module-list").append('<li id="' + titleID + '"><ul class="module-collapse-content"></ul></li>');
+        const moduleSubList = html.find('#module-list #' + titleID + ' ul');
+        html.find('#module-list #' + titleID).prepend("<div class='flexrow'><input type='checkbox' class='module-collapse-checkbox' name='" + titleID + "' data-dtype='Boolean'><label class='module-collapse-title package-title'><span id='module-count'></span>" + title + "</label><button type='button' class='module-collapse-collapsible open'>Show</button><button type='button' class='module-collapse-collapsible close'>Hide</button></div>");
         if (items[0].find("div label input").prop("checked")) {
             moduleSubList.siblings("div").find("input").prop("checked", true);
         }
         items.forEach((item) => {
             moduleSubList.append(item);
         })
+
+        moduleSubList.siblings("div").find("label span#module-count").text("(" + moduleSubList.find("li").length + ") ")
     });
 
     html.find(".module-collapse-collapsible.open").click(async (ev) => {
